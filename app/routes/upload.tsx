@@ -1,14 +1,15 @@
 import { type FormEvent, useState } from "react";
-import NavBar from "~/components/NavBar";
+import NavBar from "~/components/Header";
 import FileUploader from "~/components/FileUploader";
+import Button from "~/components/app/Button";
 import { usePuterStore } from "~/lib/puter";
 import { useNavigate } from "react-router";
 import { convertPdfToImage } from "~/lib/pdf2img";
 import { generateUUID } from "~/lib/utils";
-import { prepareInstructions, AIResponseFormat } from "data";
+import { prepareInstructions } from "data";
 
 const Upload = () => {
-  const { auth, isLoading, fs, ai, kv } = usePuterStore();
+  const { fs, ai, kv } = usePuterStore();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
   const [statusText, setStatusText] = useState("");
@@ -92,11 +93,11 @@ const Upload = () => {
   };
 
   return (
-    <main className="bg-[url('/images/bg-main.svg')] bg-cover">
+    <main className="bg-linear-to-r from-cyan-500 to-blue-500">
       <NavBar />
 
       <section className="main-section">
-        <div className="page-heading py-16">
+        <div className="page-heading">
           <h1>Smart feedback for your dream job</h1>
           {isProcessing ? (
             <>
@@ -145,9 +146,9 @@ const Upload = () => {
                 <FileUploader onFileSelect={handleFileSelect} />
               </div>
 
-              <button className="primary-button" type="submit">
+              <Button type="submit" disabled={!file || isProcessing}>
                 Analyze Resume
-              </button>
+              </Button>
             </form>
           )}
         </div>
